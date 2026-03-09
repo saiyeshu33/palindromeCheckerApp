@@ -1,69 +1,27 @@
 import java.util.Scanner;
 
-class Node {
-    char data;
-    Node next;
-
-    Node(char data) {
-        this.data = data;
-        this.next = null;
-    }
-}
-
 public class PalindromeCheckerApp {
 
-    static Node reverse(Node head) {
-        Node prev = null;
-        Node curr = head;
-        Node next = null;
-
-        while (curr != null) {
-            next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
+    static boolean isPalindrome(String str, int start, int end) {
+        if (start >= end) {
+            return true;
         }
-        return prev;
+
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+        }
+
+        return isPalindrome(str, start + 1, end - 1);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
         String input = sc.nextLine();
 
-        Node head = null, tail = null;
+        boolean result = isPalindrome(input, 0, input.length() - 1);
 
-        for (int i = 0; i < input.length(); i++) {
-            Node newNode = new Node(input.charAt(i));
-            if (head == null) {
-                head = tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-
-        Node slow = head, fast = head;
-
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        Node secondHalf = reverse(slow);
-        Node firstHalf = head;
-
-        boolean isPalindrome = true;
-
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data) {
-                isPalindrome = false;
-                break;
-            }
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
-        }
-
-        if (isPalindrome) {
+        if (result) {
             System.out.println("Palindrome");
         } else {
             System.out.println("Not a Palindrome");

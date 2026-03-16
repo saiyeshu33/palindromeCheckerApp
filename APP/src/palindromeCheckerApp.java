@@ -1,22 +1,36 @@
+import java.util.Scanner;
+
 public class palindromeCheckerApp {
 
-    public static void main(String[] args) {
+    public static boolean isPalindrome(String str) {
+        // Normalize string: remove spaces and convert to lowercase
+        str = str.replaceAll("\\s+", "").toLowerCase();
 
-        String input = "madam";
-        boolean isPalindrome = true;
+        int left = 0;
+        int right = str.length() - 1;
 
-        for (int i = 0; i < input.length() / 2; i++) {
-            if (input.charAt(i) != input.charAt(input.length() - 1 - i)) {
-                isPalindrome = false;
-                break;
+        while (left < right) {
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
             }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a string: ");
+        String input = sc.nextLine();
+
+        if (isPalindrome(input)) {
+            System.out.println("It is a palindrome (ignoring case and spaces).");
+        } else {
+            System.out.println("It is not a palindrome.");
         }
 
-        System.out.println("Input String : " + input);
-        if (isPalindrome) {
-            System.out.println("Result : The string is a palindrome.");
-        } else {
-            System.out.println("Result : The string is not a palindrome.");
-        }
+        sc.close();
     }
 }
